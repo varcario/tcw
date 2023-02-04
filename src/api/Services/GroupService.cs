@@ -87,6 +87,10 @@ namespace FileUploadApi.Services
             }
         }
 
+        /// <summary>
+        /// Read the GroupAddress junction table to create a list of group responses. 
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<GroupResponse>> ReadGroupsAsync()
         {
             var groups = await tcwDbContext.Group

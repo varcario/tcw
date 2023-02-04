@@ -169,9 +169,6 @@ export default function Container(){
                     
                 </div>        
             </div>
-                <hr className="border-top"/>  
-                       
-            
             {/* <!-- Modal add/edit speaker --> */}
             <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div className="modal-dialog">
