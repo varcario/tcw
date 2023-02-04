@@ -88,7 +88,7 @@ namespace FileUploadApi.Services
         }
 
         /// <summary>
-        /// Read the GroupAddress junction table to create a list of group responses. 
+        /// Join the Group table with the GroupAddress junction table and Address table to build the list of groups.
         /// </summary>
         /// <returns></returns>
         public async Task<List<GroupResponse>> ReadGroupsAsync()

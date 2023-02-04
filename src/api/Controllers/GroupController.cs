@@ -30,7 +30,7 @@ namespace FileUploadApi.Controllers
                 return NotFound(groupResponse);
             }
             
-            return Ok(groupResponse.Group);
+            return Ok(groupResponse);
         }
 
         [HttpGet]

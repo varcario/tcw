@@ -14,9 +14,11 @@ export default function Container(){
     const [inputZipCode, setInputZipCode] = useState("");
     const [stateId, setStateId] = useState("");
     const [states, setStates] = useState({list:[]});
+    const [groups, setGroups] = useState({list:[]});
 
     useEffect(()=>{
         getStates(baseUrl);
+        getGroups(baseUrl);
     }, [baseUrl]);
 
     function getStates(baseUrl){
@@ -32,7 +34,21 @@ export default function Container(){
         .catch(err => console.log("An error occured.", err));
     }
 
-    function postAddress(){
+    function getGroups(baseUrl){
+        console.log("GET -> group");
+        fetch(`${baseUrl}/group`, {
+            method: "GET",
+            headers: {                
+                "Accept": "applicaiton/json"
+            }
+        })
+        .then(response => response.json())
+        .then(data => setGroups({list: data}))
+        .catch(err => console.log("An error occured.", err));
+    }
+
+    function postGroup(){
+        
         console.log("POST -> groupName", inputGroupName);
         console.log("POST -> streetAddress", inputStreetAddress);
         console.log("POST -> suite", inputSuite);
@@ -55,21 +71,46 @@ export default function Container(){
                 stateId: stateId
             })
         })
-        .catch(err => console.log("An error occured.", err));
+        .then(response => response.json())
+        .then(data => { 
+            groups.list.push(data); 
+            setGroups({list: groups.list});
+        })
+        .catch(err=> console.log("An error occured.", err));
+       
     }
 
     return (
         <div className="col">
            <div className="card rounded-0 vh-100">
-                <div className="vstack">
+              
                     <div className="hstack hw-100 card-header px-3 pt-3">
                         <h5 className="mt-2">Groups</h5>
                         
                     </div>   
                     <button type="button" className="btn btn-primary ms-3 mt-3 me-auto" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                             + Add group&nbsp;&nbsp;
-                        </button>
-                </div>        
+                    </button>
+                    <hr className="border-top"/>                  
+                    <div className="card rounded-0 border-0 ms-3 me-0 overflow-auto ag-theme-alpine-dark">
+                    <div className="card-body mb-auto p-0  align-content-start flex-wrap ">
+                        <ul className="list-group list-group-flush">
+                        {
+                            groups.list.map(item=>{
+                                return(
+                                    <li key={item.group.id} className="list-group-item  border-0">
+                                        <div className="card-header border-0 w-100">
+                                            <h5 className="card-title">{item.group.groupName}</h5>
+                                            <p className="card-text">{item.address.streetAddress}, {item.address.city}</p>                                    
+                                        </div>   
+                                    </li>
+                                )
+                            })
+                        }  
+                        </ul>
+                    </div>
+                    </div>
+              
             </div>
             {/* <!-- Modal add/edit speaker --> */}
             <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -110,7 +151,7 @@ export default function Container(){
                 </div>
                 <div className="modal-footer">
                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" >Cancel</button>
-                    <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={e => {postAddress();}}>Save</button>                    
+                    <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={e => {postGroup();}}>Save</button>                    
                 </div>
                 </div>
             </div>
