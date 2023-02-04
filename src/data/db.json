@@ -89,15 +89,15 @@
       "flyer": "https://tarrantcountywide.org/wp-content/uploads/2023/01/tcw-2023-09-baxter-b.pdf"
     },
     {
+      "id": 8,
       "date": "03/04/2023",
       "name": "Alex P.",
       "homeGroup": {
         "name": "Tuesday night speaker meeting",
-        "city": "North rich land hills",
+        "city": "North richland hills",
         "state": "Texas"
       },
-      "flyer": "https://somewhere.com",
-      "id": 8
+      "flyer": "https://somewhere.com"
     }
   ]
 }

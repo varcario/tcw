@@ -1,0 +1,20 @@
+USE [TcwDb]
+GO
+/****** Object:  Table [dbo].[TcwDb]    Script Date: 2/3/2023 2:54:30 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Record](
+	[Id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	[SpeakerId] [int] NOT NULL,
+	[Description] [nvarchar](1000) NOT NULL,
+	[FilePath] [nvarchar](255) NULL,
+	[TS] [smalldatetime] NOT NULL,
+	[Published] [bit] NOT NULL,
+ CONSTRAINT [PK_Record] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO

@@ -5,7 +5,7 @@ import { upload } from '@testing-library/user-event/dist/upload';
 
 export default function Container(){
 
-    const [uploadUrl] = useState("https://localhost:7092/post");
+    const [uploadUrl] = useState("https://localhost:7092/record");
 
     const inputFile = useRef();
     const [inputSpeakerId, setInputSpeakerId] = useState("");

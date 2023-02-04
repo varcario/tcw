@@ -6,10 +6,13 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 
 export default function Container(){
     const gridRef = useRef();
-    const [backendUrl] = useState("http://localhost:3003/speaker");
+    const [backendUrl] = useState("http://localhost:3003");
+    const [baseUrl] = useState("https://localhost:7092");
     const [speakers, setSpeakers] = useState({list:[]});
     const [editMode, setEditMode] = useState(false);
     const [speakerId, setSpeakerId] = useState(null);
+    const [stateId, setStateId] = useState("");
+    const [states, setStates] = useState({list:[]});
     const [inputDate, setInputDate] = useState("");
     const [inputName, setInputName] = useState("");
     const [inputHomegroupName, setInputHomegroupName] = useState("");
@@ -121,11 +124,12 @@ export default function Container(){
 
     useEffect(()=>{
         getSpeaker(backendUrl);
-    }, [backendUrl]);
+        getStates(baseUrl)
+    }, [backendUrl, baseUrl]);
 
     function getSpeaker(backendUrl){
         console.log("GET -> speaker");
-        fetch(backendUrl)
+        fetch(`${backendUrl}/speaker`)
         .then(response =>{
         return (response.json());
         })
@@ -138,7 +142,7 @@ export default function Container(){
         });
     }
 
-    function postSpeaker(){
+    function postSpeaker(baseUrl){
         console.log("POST -> inputDate", inputDate);
         console.log("POST -> inputName", inputName);
         console.log("POST -> inputHomegroupName", inputHomegroupName);
@@ -146,7 +150,7 @@ export default function Container(){
         console.log("POST -> inputHomegroupState", inputHomegroupState);
         console.log("POST -> inputFlyer", inputFlyer);
 
-        fetch(backendUrl, {
+        fetch(`${backendUrl}/speaker`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -178,24 +182,16 @@ export default function Container(){
         });
     }
 
-    function putState(id, state){
-        console.log("PUT -> speakerId", id);
-        console.log("PUT -> inputHomegroupState", state);
-
-        fetch(`${backendUrl}/${id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
+    function getStates(baseUrl){
+        console.log("GET -> states");
+        fetch(`${baseUrl}/state`, {
+            method: "GET",
+            headers: {                
                 "Accept": "applicaiton/json"
-            },
-            body: JSON.stringify({   
-                id: id,
-                homeGroup: {
-                    state: state
-                }
-            })
+            }
         })
-        .then(() => getSpeaker(backendUrl))
+        .then(response => response.json())
+        .then(data => setStates({list: data}))
         .catch(err => console.log("An error occured.", err));
     }
 
@@ -311,19 +307,32 @@ export default function Container(){
                 <div className="modal-body">
                     <div className="hstack px-3 py-3">
                         <div className="vstack gap-3">
-                            <label readonly className="form-control-plaintext" htmlFor="inputDate">Date:</label>
-                            <label readonly className="form-control-plaintext" htmlFor="inputName">Name:</label>
-                            <label readonly className="form-control-plaintext" htmlFor="inputHomegroupName">Homegroup:</label>
-                            <label readonly className="form-control-plaintext" htmlFor="inputHomegroupCity">City:</label>
-                            <label readonly className="form-control-plaintext" htmlFor="inputHomegroupState">State:</label>
-                            <label readonly className="form-control-plaintext" htmlFor="inputFlyer">Flyer URL:</label>
+                            <label readOnly className="form-control-plaintext" htmlFor="inputDate">Date:</label>
+                            <label readOnly className="form-control-plaintext" htmlFor="inputName">Name:</label>
+                            <label readOnly className="form-control-plaintext" htmlFor="inputHomegroupName">Homegroup:</label>
+                            <label readOnly className="form-control-plaintext" htmlFor="inputHomegroupCity">City:</label>
+                            <label readOnly className="form-control-plaintext" htmlFor="inputHomegroupState">State:</label>
+                            <label readOnly className="form-control-plaintext" htmlFor="inputFlyer">Flyer URL:</label>
                         </div> 
                         <div className="vstack gap-3">
                             <input type="text" className="form-control" id="inputDate" value={inputDate} onChange={(event)=>{setInputDate(event.target.value)}} />
                             <input type="text" className="form-control" id="inputName" value={inputName} onChange={(event)=>{setInputName(event.target.value)}} />
                             <input type="text" className="form-control" id="inputHomegroupName" value={inputHomegroupName} onChange={(event)=>{setInputHomegroupName(event.target.value)}}/>
                             <input type="text" className="form-control" id="inputHomegroupCity" value={inputHomegroupCity} onChange={(event)=>{setInputHomegroupCity(event.target.value)}}/>
-                            <input type="text" className="form-control" id="inputHomegroupState" value={inputHomegroupState} onChange={(event)=>{setInputHomegroupState(event.target.value)}} />
+                            {/* <input type="text" className="form-control" id="inputHomegroupState" value={inputHomegroupState} onChange={(event)=>{setInputHomegroupState(event.target.value)}} /> */}
+                           
+                             <select className="form-select" value={stateId} onChange={e => setStateId(e.target.value)} aria-label="state">
+                                <option defaultValue>Select state</option>
+                                {
+                                    states.list.map(s=>{
+                                        return(
+                                            <option value={s.id}>{s.abbreviation}</option>
+                                        )
+                                    })
+                                }                               
+                            </select>
+                           
+
                             <input type="text" className="form-control" id="inputFlyer" value={inputFlyer} onChange={(event)=>{setInputFlyer(event.target.value)}} />
                         </div>
                     </div>

@@ -15,17 +15,18 @@ namespace FileUploadApi.Entities
         {
         }
 
-        public virtual DbSet<Post> Post { get; set; }
+        public virtual DbSet<Record> Record { get; set; }
+        public virtual DbSet<StateLookup> StateLookup { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Post>(entity =>
+            modelBuilder.Entity<Record>(entity =>
             {
                 entity.Property(e => e.Description)
                     .IsRequired()
                     .HasMaxLength(1000);
 
-                entity.Property(e => e.Imagepath).HasMaxLength(255);
+                entity.Property(e => e.FilePath).HasMaxLength(255);
 
                 entity.Property(e => e.Ts)
                     .HasColumnType("smalldatetime")
