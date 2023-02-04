@@ -15,7 +15,7 @@ namespace FileUploadApi.Services
             this.tcwDbContext = tcwDbContext;
             this.environment = environment;
         }
-        public async Task<RecordResponse> CreatePostAsync(RecordRequest recordRequest)
+        public async Task<RecordResponse> CreateRecordAsync(RecordRequest recordRequest)
         {
             var record = new Entities.Record
             {
@@ -42,7 +42,7 @@ namespace FileUploadApi.Services
             };
             return new RecordResponse { Success = true, Record = postModel };
         }
-        public async Task SavePostImageAsync(RecordRequest postRequest)
+        public async Task SaveAudioFileAsync(RecordRequest postRequest)
         {
             var uniqueFileName = FileHelper.GetUniqueFileName(postRequest.Image.FileName);
             Console.WriteLine($"speakerId => {postRequest.SpeakerId.ToString()}");

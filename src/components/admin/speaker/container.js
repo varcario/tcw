@@ -318,21 +318,17 @@ export default function Container(){
                             <input type="text" className="form-control" id="inputDate" value={inputDate} onChange={(event)=>{setInputDate(event.target.value)}} />
                             <input type="text" className="form-control" id="inputName" value={inputName} onChange={(event)=>{setInputName(event.target.value)}} />
                             <input type="text" className="form-control" id="inputHomegroupName" value={inputHomegroupName} onChange={(event)=>{setInputHomegroupName(event.target.value)}}/>
-                            <input type="text" className="form-control" id="inputHomegroupCity" value={inputHomegroupCity} onChange={(event)=>{setInputHomegroupCity(event.target.value)}}/>
-                            {/* <input type="text" className="form-control" id="inputHomegroupState" value={inputHomegroupState} onChange={(event)=>{setInputHomegroupState(event.target.value)}} /> */}
-                           
+                            <input type="text" className="form-control" id="inputHomegroupCity" value={inputHomegroupCity} onChange={(event)=>{setInputHomegroupCity(event.target.value)}}/>  
                              <select className="form-select" value={stateId} onChange={e => setStateId(e.target.value)} aria-label="state">
                                 <option defaultValue>Select state</option>
                                 {
                                     states.list.map(s=>{
                                         return(
-                                            <option value={s.id}>{s.abbreviation}</option>
+                                            <option key={s.id} value={s.id}>{s.abbreviation}</option>
                                         )
                                     })
                                 }                               
                             </select>
-                           
-
                             <input type="text" className="form-control" id="inputFlyer" value={inputFlyer} onChange={(event)=>{setInputFlyer(event.target.value)}} />
                         </div>
                     </div>

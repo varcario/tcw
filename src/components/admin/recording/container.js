@@ -195,7 +195,7 @@ export default function Container(){
                             <option value="3">Three</option>
                         </select>
                         <input className="form-control" type="file" ref={inputFile} id="formFile" />
-                        <textarea class="form-control" id="description" value={inputDescription} onChange={e => setInputDescription(e.target.value)} rows="3" />
+                        <textarea className="form-control" id="description" value={inputDescription} onChange={e => setInputDescription(e.target.value)} rows="3" />
                         </div>
                     </div>
                 </div>

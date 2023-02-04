@@ -6,9 +6,8 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Group](
-	[Id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
-	[Name] [nvarchar](32) NOT NULL,
-    [AddressId] [int] FOREIGN KEY REFERENCES Address(Id),
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[GroupName] [varchar](64) NOT NULL,
 	[TS] [smalldatetime] NOT NULL,
 	[Published] [bit] NOT NULL,
  CONSTRAINT [PK_Group] PRIMARY KEY CLUSTERED 

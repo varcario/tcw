@@ -31,9 +31,9 @@ namespace FileUploadApi.Controllers
             }
             if (postRequest.Image != null)
             {
-                await postService.SavePostImageAsync(postRequest);
+                await postService.SaveAudioFileAsync(postRequest);
             }
-            var postResponse = await postService.CreatePostAsync(postRequest);
+            var postResponse = await postService.CreateRecordAsync(postRequest);
             if (!postResponse.Success)
             {
                 return NotFound(postResponse);

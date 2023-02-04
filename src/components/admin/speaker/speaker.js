@@ -5,8 +5,8 @@ import Nav from '../../common/nav';
 export default function Speaker(){
     return(
         <div>
-            <div class="container-fluid">
-                <div class="row flex-nowrap">
+            <div className="container-fluid">
+                <div className="row flex-nowrap">
                     <Nav />
                     <Container />
                 </div>

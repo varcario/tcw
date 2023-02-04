@@ -17,6 +17,9 @@ namespace FileUploadApi.Entities
 
         public virtual DbSet<Record> Record { get; set; }
         public virtual DbSet<StateLookup> StateLookup { get; set; }
+        public virtual DbSet<Address> Address { get; set; }
+        public virtual DbSet<Group> Group { get; set; }
+        public virtual DbSet<GroupAddress> GroupAddress { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,8 +37,48 @@ namespace FileUploadApi.Entities
 
             });
 
+            modelBuilder.Entity<StateLookup>(entity => { });
+            modelBuilder.Entity<Address>(entity => {
+
+                entity.Property(e => e.StreetAddress)
+                    .IsRequired()
+                    .HasMaxLength(64);
+
+                entity.Property(e => e.Suite).HasMaxLength(16);
+                entity.Property(e => e.ZipCode).HasMaxLength(16);
+                entity.Property(e => e.StateId)
+                    .IsRequired();
+
+                entity.Property(e => e.Ts)
+                       .HasColumnType("smalldatetime")
+                       .HasColumnName("TS");
+            });
+            modelBuilder.Entity<Group>(entity => {
+
+                entity.Property(e => e.GroupName)
+                    .IsRequired()
+                    .HasMaxLength(64);
+
+                entity.Property(e => e.Ts)
+                       .HasColumnType("smalldatetime")
+                       .HasColumnName("TS");
+            });
+            modelBuilder.Entity<GroupAddress>(entity => {
+               
+                entity.Property(e => e.GroupId)
+                    .IsRequired();
+
+                entity.Property(e => e.AddressId)
+                    .IsRequired();
+
+                entity.Property(e => e.Ts)
+                       .HasColumnType("smalldatetime")
+                       .HasColumnName("TS");
+            });
+
             OnModelCreatingPartial(modelBuilder);
         }
+
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }

@@ -22,6 +22,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<TcwDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SocialDbConnectionString")));
 builder.Services.AddTransient<IRecordService, RecordService>();
 builder.Services.AddTransient<IStateService, StateService>();
+builder.Services.AddTransient<IAddressService, AddressService>();
+builder.Services.AddTransient<IGroupService, GroupService>();
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

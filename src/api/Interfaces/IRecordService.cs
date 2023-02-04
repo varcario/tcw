@@ -4,7 +4,7 @@ namespace FileUploadApi.Interfaces
 {
     public interface IRecordService
     {
-        Task SavePostImageAsync(RecordRequest postRequest);
-        Task<RecordResponse> CreatePostAsync(RecordRequest postRequest);
+        Task SaveAudioFileAsync(RecordRequest recordRequest);
+        Task<RecordResponse> CreateRecordAsync(RecordRequest recordRequest);
     }
 }

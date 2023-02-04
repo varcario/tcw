@@ -12,9 +12,8 @@ import Committee from './components/admin/committee/committee';
 import Speaker from './components/admin/speaker/speaker';
 import Recording from './components/admin/recording/recording';
 import Finance from './components/admin/finance/finance';
-
+import Group from './components/admin/group/group';
 class App extends Component{
-
   render(){
     return (
       <div>
@@ -33,11 +32,11 @@ class App extends Component{
               <Route path="/admin/speaker" element={<Speaker />} />
               <Route path="/admin/recording" element={<Recording />} />
               <Route path="/admin/finance" element={<Finance />} />
+              <Route path="/admin/group" element={<Group />} />
             </Routes>
         </Router>
       </div>
     );
   }
 }
-
 export default App;
