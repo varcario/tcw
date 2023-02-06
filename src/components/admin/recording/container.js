@@ -1,7 +1,7 @@
 import React, {useState, useRef} from 'react';
 import audio from '../speaker/audio/2020-11-TCW-Jeff-H.m4a';
-import {FilePlay} from 'react-bootstrap-icons';
-import { upload } from '@testing-library/user-event/dist/upload';
+//import {FilePlay} from 'react-bootstrap-icons';
+//import { upload } from '@testing-library/user-event/dist/upload';
 
 export default function Container(){
 

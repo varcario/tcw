@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import audio from '../speaker/audio/2020-11-TCW-Jeff-H.m4a';
-import {FilePlay} from 'react-bootstrap-icons';
-import { upload } from '@testing-library/user-event/dist/upload';
+import { connect, useSelector, useDispatch } from 'react-redux';
+import { set, push, buildGroupNameIndex } from './../../../features/group/group-slice';
 
-export default function Container(){
+export default connect()(function Container(){
+
+    const groups = useSelector((state) => state.group.value);
+    const dispatch = useDispatch();
 
     const [baseUrl] = useState("https://localhost:7092");
 
@@ -14,7 +16,7 @@ export default function Container(){
     const [inputZipCode, setInputZipCode] = useState("");
     const [stateId, setStateId] = useState("");
     const [states, setStates] = useState({list:[]});
-    const [groups, setGroups] = useState({list:[]});
+    
 
     useEffect(()=>{
         getStates(baseUrl);
@@ -34,7 +36,7 @@ export default function Container(){
         .catch(err => console.log("An error occured.", err));
     }
 
-    function getGroups(baseUrl){
+   function getGroups(baseUrl){
         console.log("GET -> group");
         fetch(`${baseUrl}/group`, {
             method: "GET",
@@ -43,7 +45,8 @@ export default function Container(){
             }
         })
         .then(response => response.json())
-        .then(data => setGroups({list: data}))
+        //.then(data => setGroups({list: data}))
+        .then(data=> { dispatch(set(data)); dispatch(buildGroupNameIndex());})
         .catch(err => console.log("An error occured.", err));
     }
 
@@ -73,8 +76,9 @@ export default function Container(){
         })
         .then(response => response.json())
         .then(data => { 
-            groups.list.push(data); 
-            setGroups({list: groups.list});
+            //groups.list.push(data); 
+            //setGroups({list: groups.list});
+            dispatch(push(data));
         })
         .catch(err=> console.log("An error occured.", err));
        
@@ -95,7 +99,7 @@ export default function Container(){
                     <div className="card rounded-0 border-0 ms-3 me-0 overflow-auto ag-theme-alpine-dark">
                     <div className="card-body mb-auto p-0  align-content-start flex-wrap ">
                         <ul className="list-group list-group-flush">
-                        {
+                        {                           
                             groups.list.map(item=>{
                                 return(
                                     <li key={item.group.id} className="list-group-item  border-0">
@@ -158,4 +162,4 @@ export default function Container(){
             </div>
         </div>
     )
-}
+});

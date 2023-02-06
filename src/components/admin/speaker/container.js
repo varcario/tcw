@@ -1,15 +1,18 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import dateFormat from "dateformat";
+import { connect, useSelector } from 'react-redux';
+//import dateFormat from "dateformat";
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 
-export default function Container(){
+
+export default connect(state=>state.group)(function Container(){
     const gridRef = useRef();
+    const groups = useSelector((state) => state.group.value);
+
     const [backendUrl] = useState("http://localhost:3003");
     const [baseUrl] = useState("https://localhost:7092");
-    const [speakers, setSpeakers] = useState({list:[]});
-    const [editMode, setEditMode] = useState(false);
+    const [editMode] = useState(false);
     const [speakerId, setSpeakerId] = useState(null);
     const [stateId, setStateId] = useState("");
     const [states, setStates] = useState({list:[]});
@@ -120,11 +123,12 @@ export default function Container(){
 
     const onFirstDataRendered = useCallback((params) => {
         gridRef.current.api.sizeColumnsToFit();
+        
       }, []);
 
     useEffect(()=>{
         getSpeaker(backendUrl);
-        getStates(baseUrl)
+        getStates(baseUrl);        
     }, [backendUrl, baseUrl]);
 
     function getSpeaker(backendUrl){
@@ -134,7 +138,6 @@ export default function Container(){
         return (response.json());
         })
         .then(data => {      
-            setSpeakers({list: data});
             setRowData(data);
         })
         .catch(err => {
@@ -265,13 +268,12 @@ export default function Container(){
         });
     }
 
+    // function handleDelete(speakerId){
+    //     const s = speakers.list.find(s=> s.id === speakerId);
 
-    function handleDelete(speakerId){
-        const s = speakers.list.find(s=> s.id === speakerId);
-
-        setSpeakerId(s.id);
-        setInputDate(s.date);
-    }
+    //     setSpeakerId(s.id);
+    //     setInputDate(s.date);
+    // }
 
     return (
         <div className="col">
@@ -317,7 +319,16 @@ export default function Container(){
                         <div className="vstack gap-3">
                             <input type="text" className="form-control" id="inputDate" value={inputDate} onChange={(event)=>{setInputDate(event.target.value)}} />
                             <input type="text" className="form-control" id="inputName" value={inputName} onChange={(event)=>{setInputName(event.target.value)}} />
-                            <input type="text" className="form-control" id="inputHomegroupName" value={inputHomegroupName} onChange={(event)=>{setInputHomegroupName(event.target.value)}}/>
+                            <input type="text" className="form-control" id="inputHomegroupName" list="homeGroupOptions" value={inputHomegroupName} onChange={(event)=>{setInputHomegroupName(event.target.value)}}/>
+                            <datalist id="homeGroupOptions">
+                                {                                    
+                                    groups.list.map(item=>{
+                                        return(
+                                            <option key={item.group.id} id={item.group.id}>{item.group.groupName}</option>
+                                        )
+                                    })
+                                }                                
+                            </datalist>
                             <input type="text" className="form-control" id="inputHomegroupCity" value={inputHomegroupCity} onChange={(event)=>{setInputHomegroupCity(event.target.value)}}/>  
                              <select className="form-select" value={stateId} onChange={e => setStateId(e.target.value)} aria-label="state">
                                 <option defaultValue>Select state</option>
@@ -365,5 +376,5 @@ export default function Container(){
             </div>
         </div>
     )
-}
+});
 

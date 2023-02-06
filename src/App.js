@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './components/home/home';
 import About from './components/about/about';
@@ -13,11 +13,9 @@ import Speaker from './components/admin/speaker/speaker';
 import Recording from './components/admin/recording/recording';
 import Finance from './components/admin/finance/finance';
 import Group from './components/admin/group/group';
-class App extends Component{
-  render(){
+export default function App(){
     return (
-      <div>
-        
+      <div>        
         <Router>
             <Routes>
               <Route path="/" element={<Home />} />
@@ -36,7 +34,5 @@ class App extends Component{
             </Routes>
         </Router>
       </div>
-    );
-  }
-}
-export default App;
+    )
+};

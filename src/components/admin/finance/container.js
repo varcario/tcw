@@ -1,5 +1,4 @@
 import React from 'react';
-import audio from '../speaker/audio/2020-11-TCW-Jeff-H.m4a';
 
 export default function Container(){
     return (

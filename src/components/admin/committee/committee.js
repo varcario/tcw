@@ -1,7 +1,5 @@
 import React from 'react';
-import Header from '../../common/header';
 import Container from './container';
-import Footer from '../../common/footer';
 import Nav from '../../common/nav';
 
 export default function Committee(){
