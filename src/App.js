@@ -18,12 +18,14 @@ export default function App(){
       <div>        
         <Router>
             <Routes>
-              <Route path="/" element={<Home />} />
+              {/* <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/speakers" element={<Speakers />} />
               <Route path="/service" element={<Service />} />
               <Route path="/news" element={<News />} />
               <Route path="/contact" element={<Contact />} />
+               */}
+               <Route path="/" element={<Admin />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/admin/officer" element={<Officer />} />
               <Route path="/admin/committee" element={<Committee />} />
