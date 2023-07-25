@@ -450,3 +450,6 @@ yarn-error.log*
 
 # reactjs
 .env*.local
+
+# visio 
+.~vsdx
